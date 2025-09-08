@@ -41,6 +41,8 @@ export class ApiService {
   async _fetch(url: string, options: RequestInit = {}): Promise<Response> {
     const response = await fetch(`${this.baseUrl}${url}`, {
       ...options,
+      mode: 'cors',
+      credentials: 'include',
       headers: {
         ...this.getHeaders(),
         ...options.headers,

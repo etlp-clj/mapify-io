@@ -6,7 +6,7 @@
 // API and server configuration
 export const API_CONFIG = {
   // Base URL for API requests
-  BASE_URL: import.meta.env.VITE_API_BASE || "http://localhost:3000",
+  BASE_URL: import.meta.env.VITE_API_BASE || "http://localhost:3031",
   
   // API endpoints
   ENDPOINTS: {
