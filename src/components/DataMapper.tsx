@@ -49,7 +49,7 @@ const DataMapper: React.FC<DataMapperProps> = ({ apiUrl, baseUrl = 'http://local
   const [transformLoading, setTransformLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
   const [mappingData, setMappingData] = useState<MappingData | null>(null);
-  const [transformMode, setTransformMode] = useState<TransformMode>("test");
+  const [transformMode, setTransformMode] = useState<TransformMode>("apply");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [lastTransformedSample, setLastTransformedSample] = useState<string | null>(null);
 

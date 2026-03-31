@@ -3,10 +3,13 @@
  * Application-wide configuration constants
  */
 
+// Auth bypass for development without Keycloak
+export const AUTH_DISABLED = import.meta.env.VITE_AUTH_DISABLED === "true";
+
 // API and server configuration
 export const API_CONFIG = {
   // Base URL for API requests
-  BASE_URL: import.meta.env.VITE_API_BASE || "http://localhost:3031",
+  BASE_URL: import.meta.env.VITE_API_BASE || "http://192.168.1.21:3000",
   
   // API endpoints
   ENDPOINTS: {
@@ -37,7 +40,7 @@ validateEnvironment();
 
 // OIDC/Keycloak configuration with enhanced settings
 export const OIDC_CONFIG = {
-  authority: import.meta.env.VITE_OIDC_ISSUER || "http://localhost:8080/realms/mapify",
+  authority: import.meta.env.VITE_OIDC_ISSUER || "http://192.168.1.21:8080/realms/mapify",
   client_id: import.meta.env.VITE_OIDC_CLIENT_ID || "mapify-studio",
   redirect_uri: `${window.location.origin}/`,
   post_logout_redirect_uri: `${window.location.origin}/`,
@@ -46,9 +49,10 @@ export const OIDC_CONFIG = {
   automatic_silent_renew: true,
   load_user_nfo: true,
   // Enhanced Keycloak compatibility settings
-  metadata_url: `${import.meta.env.VITE_OIDC_ISSUER || "http://localhost:8080/realms/mapify"}/.well-known/openid-configuration`,
+  metadata_url: `${import.meta.env.VITE_OIDC_ISSUER || "http://192.168.1.21:8080/realms/mapify"}/.well-known/openid-configuration`,
   includeId_token_in_silent_renew: true,
   monitor_session: false,
+  disablePKCE: true,
   check_session_interval: 2000,
   silent_request_timeout: 10000,
   // Debug logging for development

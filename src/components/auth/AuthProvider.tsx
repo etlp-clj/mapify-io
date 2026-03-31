@@ -1,5 +1,5 @@
 import { AuthProvider as OidcAuthProvider } from "react-oidc-context";
-import { OIDC_CONFIG, OIDC_DEBUG } from "@/config/constants";
+import { OIDC_CONFIG, OIDC_DEBUG, AUTH_DISABLED } from "@/config/constants";
 import { useEffect } from "react";
 
 interface AuthProviderProps {
@@ -11,6 +11,10 @@ interface AuthProviderProps {
  * Provides authentication context to the entire application
  */
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  if (AUTH_DISABLED) {
+    return <>{children}</>;
+  }
+
   // OIDC event handlers for debugging and error handling
   const onSigninCallback = () => {
     OIDC_DEBUG.log("Sign-in callback successful");

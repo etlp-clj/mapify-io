@@ -1,27 +1,39 @@
 import { useAuth as useOidcAuth } from "react-oidc-context";
+import { AUTH_DISABLED } from "@/config/constants";
 
 /**
- * Custom hook that wraps the react-oidc-context useAuth hook
- * Provides authentication state and methods
+ * Dev auth hook - returns mock authenticated state without Keycloak
  */
-export const useAuth = () => {
+const useDevAuth = () => ({
+  isAuthenticated: true,
+  isLoading: false,
+  hasError: false,
+  error: null as Error | null,
+  user: null,
+  signIn: () => {},
+  signOut: () => {},
+  getAccessToken: () => undefined as string | undefined,
+});
+
+/**
+ * OIDC auth hook - wraps react-oidc-context for Keycloak authentication
+ */
+const useOidcAuthWrapper = () => {
   const auth = useOidcAuth();
-  
+
   return {
-    // Authentication state
     isAuthenticated: auth.isAuthenticated,
     isLoading: auth.isLoading,
     hasError: !!auth.error,
     error: auth.error,
-    
-    // User information
     user: auth.user,
-    
-    // Authentication methods
     signIn: () => auth.signinRedirect(),
     signOut: () => auth.signoutRedirect(),
-    
-    // Token management
     getAccessToken: () => auth.user?.access_token,
   };
 };
+
+/**
+ * Auth hook - uses dev bypass when VITE_AUTH_DISABLED=true, otherwise Keycloak OIDC
+ */
+export const useAuth = AUTH_DISABLED ? useDevAuth : useOidcAuthWrapper;
